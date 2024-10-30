@@ -27,7 +27,6 @@ while True:
                 break
             elif guess_list[i] == temp_target[j] and i != j:
                 hits['bull'] += 1
-                break
     
     
     if hits['cow'] == 4:
