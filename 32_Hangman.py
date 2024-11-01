@@ -66,4 +66,3 @@ while True:
     play_again = input("\nWould you like to play again?").lower()[0]
     if play_again == 'False':
         break
-
