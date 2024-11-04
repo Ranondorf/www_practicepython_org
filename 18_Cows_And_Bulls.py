@@ -4,47 +4,56 @@
 import random as r
 
 
-target_number = [r.randint(0, 9) for num in range(0, 4) ]
-target_number = [0, 5, 4, 8]
-print(target_number)
-
-
-# guess_list = input("Please make a guess of a 4 digit number: ")
-hits = {'cow': 0, 'bull': 0}
-guess_count = 0
-
-
-while True:
-    guess_list = [int(digit) for digit in input("Please make a guess of a 4 digit number: ")]
-    guess_count += 1
-
-    temp_target = target_number.copy()
-    for i in range(0, 4):
-        for j in range(0, 4):
-            if guess_list[i] == temp_target[j] and i == j:
-                hits['cow'] += 1
-                temp_target[j] = -1
-                break
-            elif guess_list[i] == temp_target[j] and i != j:
-                hits['bull'] += 1
+def main():
+    target_list = []
     
     
-    if hits['cow'] == 4:
-        print(f'You guessed it in {guess_count} attempts')
-        break
-    else:
-        if hits['cow'] == 1:
-            print('1 cow')
-        elif hits['cow'] > 1:
-            print(f'{hits["cow"]} cows')
-        else:
-            pass
-        if hits['bull'] == 1:
-            print('1 bull')
-        elif hits['bull'] > 1:
-            print(f'{hits["bull"]} bull')
-        else:
-            pass
-    
-        hits = {'cow': 0, 'bull': 0}
+    while len(target_list) < 4:
+        new_number = r.randint(0,9)
+        if new_number not in target_list:
+            target_list.append(new_number)
 
+
+    # guess_list = input("Please make a guess of a 4 digit number: ")
+    digit_seen_count = [{'cow': 0, 'bull': 0} for n in range(10)]
+    guess_count = 0
+    bull_count = 0
+ 
+
+    while bull_count != 4:
+        guess_list = [int(digit) for digit in input("Please make a guess of a 4 digit number (Each digit must be unique): ")]
+        guess_count += 1
+        bull_count = 0
+        cow_count = 0
+
+
+        for i in range(4):
+            for j in range(4):
+                if guess_list[i] == target_list[j] and i == j:
+                    digit_seen_count[guess_list[i]]['bull'] += 1
+                    digit_seen_count[guess_list[i]]['cow'] = 0
+                elif guess_list[i] == target_list[j] and i != j and digit_seen_count[guess_list[i]]['bull'] != 1:
+                    digit_seen_count[guess_list[i]]['cow'] += 1
+                else:
+                    # Do nothing
+                    pass
+
+
+        for i in range(10):
+            bull_count += digit_seen_count[i]['bull']
+            cow_count += digit_seen_count[i]['cow']
+
+
+        print(f'bull count : {bull_count} and cow count : {cow_count}')
+        digit_seen_count = [{'cow': 0, 'bull': 0} for n in range(10)]
+
+
+    print(f'Well done, it took you {guess_count} guesses to guess the correct answer')
+        
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except Exception as e:
+        print(str(e))
