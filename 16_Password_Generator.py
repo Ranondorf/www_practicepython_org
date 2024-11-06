@@ -4,8 +4,6 @@
 import random
 
 
-
-
 def create_weak(filename):
     word_list = []
 
@@ -21,8 +19,6 @@ def create_weak(filename):
 
 
     return random.choice(word_list)
-
-
 
 
 def random_symbol():
@@ -41,7 +37,6 @@ def create_strong(length):
 
     
     return password_list
-
 
 
 def main():
